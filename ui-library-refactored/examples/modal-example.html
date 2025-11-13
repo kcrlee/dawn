@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Dialog Example - Dawn UI Components</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: #f9f9f9;
+    }
+
+    .demo-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .button:hover {
+      background: #333;
+    }
+
+    .button--secondary {
+      background: #fff;
+      color: #000;
+      border: 1px solid #ddd;
+    }
+
+    .button--secondary:hover {
+      background: #f5f5f5;
+    }
+
+    .button--primary {
+      background: #4caf50;
+    }
+
+    .button--primary:hover {
+      background: #45a049;
+    }
+
+    /* Modal Styles */
+    .modal-dialog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 1000;
+    }
+
+    .modal-dialog.is-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-dialog__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-dialog__content {
+      position: relative;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-height: 90vh;
+      overflow: auto;
+      animation: slideUp 0.3s ease;
+      z-index: 1;
+    }
+
+    .modal-dialog__content--small {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-dialog__content--medium {
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .modal-dialog__content--large {
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .modal-dialog__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .modal-dialog__title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .modal-dialog__close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .modal-dialog__close:hover {
+      background: #f5f5f5;
+    }
+
+    .modal-dialog__body {
+      padding: 1.5rem;
+    }
+
+    .modal-dialog__footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-section">
+    <h1>Modal Dialog Examples</h1>
+    <p>Click the buttons below to open different modal configurations:</p>
+
+    <button class="button" onclick="document.getElementById('modal-small').open()">
+      Small Modal
+    </button>
+
+    <button class="button" onclick="document.getElementById('modal-medium').open()">
+      Medium Modal
+    </button>
+
+    <button class="button" onclick="document.getElementById('modal-large').open()">
+      Large Modal
+    </button>
+
+    <button class="button" onclick="document.getElementById('modal-form').open()">
+      Form Modal
+    </button>
+
+    <button class="button" onclick="document.getElementById('modal-confirmation').open()">
+      Confirmation Modal
+    </button>
+  </div>
+
+  <!-- Small Modal -->
+  <modal-dialog id="modal-small" title="Small Modal" size="small">
+    <p>This is a small modal. Perfect for quick messages or simple confirmations.</p>
+    <div slot="footer">
+      <button class="button--secondary button" onclick="this.closest('modal-dialog').close()">
+        Close
+      </button>
+    </div>
+  </modal-dialog>
+
+  <!-- Medium Modal (Default) -->
+  <modal-dialog id="modal-medium" title="Medium Modal" size="medium">
+    <h3>Welcome!</h3>
+    <p>This is a medium-sized modal with more content.</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris.
+    </p>
+    <ul>
+      <li>Feature 1</li>
+      <li>Feature 2</li>
+      <li>Feature 3</li>
+    </ul>
+  </modal-dialog>
+
+  <!-- Large Modal -->
+  <modal-dialog id="modal-large" title="Large Modal - Product Gallery" size="large">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+      <div style="aspect-ratio: 1; background: #f5f5f5; border-radius: 4px;"></div>
+    </div>
+    <p style="margin-top: 1rem;">
+      Large modals are perfect for galleries, detailed content, or multi-step forms.
+    </p>
+  </modal-dialog>
+
+  <!-- Form Modal -->
+  <modal-dialog id="modal-form" title="Contact Us" size="medium">
+    <form id="contact-form" onsubmit="handleFormSubmit(event)">
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name</label>
+        <input
+          type="text"
+          name="name"
+          required
+          style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Message</label>
+        <textarea
+          name="message"
+          required
+          rows="4"
+          style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; resize: vertical;"></textarea>
+      </div>
+    </form>
+
+    <div slot="footer">
+      <button class="button--secondary button" onclick="this.closest('modal-dialog').close()">
+        Cancel
+      </button>
+      <button class="button--primary button" onclick="document.getElementById('contact-form').requestSubmit()">
+        Send Message
+      </button>
+    </div>
+  </modal-dialog>
+
+  <!-- Confirmation Modal -->
+  <modal-dialog
+    id="modal-confirmation"
+    title="Delete Item?"
+    size="small"
+    close-on-overlay="false">
+    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+
+    <div slot="footer">
+      <button class="button--secondary button" onclick="this.closest('modal-dialog').close()">
+        Cancel
+      </button>
+      <button class="button" style="background: #f44336;" onclick="handleDelete()">
+        Delete
+      </button>
+    </div>
+  </modal-dialog>
+
+  <!-- Load Component -->
+  <script type="module" src="../components/modal-dialog.js"></script>
+
+  <script>
+    // Form submit handler
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+
+      console.log('Form submitted:', data);
+
+      // Close modal
+      document.getElementById('modal-form').close();
+
+      // Show success message
+      alert('Thank you! Your message has been sent.');
+      e.target.reset();
+    }
+
+    // Delete handler
+    function handleDelete() {
+      console.log('Item deleted');
+      document.getElementById('modal-confirmation').close();
+      alert('Item has been deleted.');
+    }
+
+    // Event listeners
+    document.querySelectorAll('modal-dialog').forEach(modal => {
+      modal.addEventListener('open', (e) => {
+        console.log('Modal opened:', e.target.id);
+      });
+
+      modal.addEventListener('close', (e) => {
+        console.log('Modal closed:', e.target.id);
+      });
+
+      modal.addEventListener('before-close', (e) => {
+        // You can prevent closing by calling e.preventDefault()
+        console.log('Modal about to close:', e.target.id);
+      });
+    });
+  </script>
+</body>
+</html>
